@@ -1,23 +1,47 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MTodayTask</title>
+    <title>Today'sTask</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <header>
-      <h3>Today’s Task</h3>
-      <ul>
-        <li>ログイン</li>
-        <li>新規登録</li>
-      </ul>
+    <header class="sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-dark mb-2">
+        <span class="navbar-brand mb-0 h1">Today's Task</span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <% if user_signed_in? %>
+            <li class="nav-item m-2 border border-dark rounded-lg">
+              <%= link_to "タスク一覧", new_user_session_path, class:"nav-link" %>
+            </li>
+            <li class="nav-item m-2 border border-dark rounded-lg">
+              <%= link_to "会員情報", users_my_page_path, class:"nav-link" %>
+            </li>
+            <li class="nav-item m-2 border border-dark rounded-lg">
+              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"nav-link" %>
+            </li>
+            <% else %>
+            <li class="nav-item m-2 border border-dark rounded-lg">
+              <%= link_to "ログイン", new_user_session_path, class:"nav-link" %>
+            </li>
+            <li class="nav-item m-2 border border-dark rounded-lg">
+              <%= link_to "新規登録", new_user_registration_path, class:"nav-link" %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
     </header>
-    <%= yield %>
+    <div class="mt-10"></div>
+      <%= yield %>
   </body>
 </html>
