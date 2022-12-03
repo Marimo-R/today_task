@@ -1,0 +1,16 @@
+<div class="container">
+  <h2>会員情報編集</h2>
+</div>
+<div class="container">
+  <%= form_with model: @user, url: users_information_path, method: :patch do |f| %>
+    <div class="border rounded px-2 my-2">
+      <p class="font-weight-bold"><%= f.label :name, "ユーザーネーム" %></p>
+      <p><%= f.text_field :name %></p>
+    </div>
+    <div class="border rounded px-2 my-2">
+      <p class="font-weight-bold"><%= f.label :email, "メールアドレス" %></p>
+      <p><%= f.text_field :email %></p>
+    </div>
+    <%= f.submit "更新" %>
+  <% end %>
+</div>

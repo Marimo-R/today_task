@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     sessions: 'users/sessions'
   }
-  
+
   get 'users/my_page' => 'users#show'
   get 'users/information/edit' => 'users#edit'
   patch 'users/information' => 'users#update'
