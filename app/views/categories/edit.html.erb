@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="row mx-2">
+    <h2>カテゴリー編集</h2>
+  </div>
+  <div class="mt-5">
+    <%= form_with model: @category, url: category_path(@category.id), method: :patch do |f| %>
+      <%= f.text_field :category %>
+      <%= f.submit "更新" %>
+    <% end %>
+  </div>
+</div>
