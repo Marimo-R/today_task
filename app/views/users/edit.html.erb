@@ -1,7 +1,7 @@
 <div class="container">
-  <h2>会員情報編集</h2>
-</div>
-<div class="container">
+  <div class="row mx-2">
+    <h2>会員情報編集</h2>
+  </div>
   <%= form_with model: @user, url: users_information_path, method: :patch do |f| %>
     <div class="border rounded px-2 my-2">
       <p class="font-weight-bold"><%= f.label :name, "ユーザーネーム" %></p>
