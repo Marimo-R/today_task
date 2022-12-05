@@ -1,0 +1,7 @@
+ ja:
+    enums:
+      main_task:
+        status:
+          incomplete: "未完"
+          done: "完了"
+          deleted: "削除済み"
