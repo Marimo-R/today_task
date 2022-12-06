@@ -1,6 +1,7 @@
 class MainTasksController < ApplicationController
   def index
     @user = User.find(params[:user_id])
+    @main_tasks = @user.main_tasks
   end
 
   def show
@@ -30,7 +31,10 @@ class MainTasksController < ApplicationController
   def today_task_flag_update
   end
 
-  def task_status_update
+  def task_status_to_done
+    @main_task = MainTask.find(params[:id])
+    @main_task.update(status: 1)
+    redirect_to user_main_tasks_path(@main_task.user.id)
   end
 
   private

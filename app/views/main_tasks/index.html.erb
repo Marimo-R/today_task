@@ -1,4 +1,24 @@
-<h1>MainTask Index</h1>
-<%= link_to "メインタスク作成", new_user_main_task_path %>
-<%= link_to "カテゴリー一覧", categories_path %>
-<%= @user.name %>
+<div class="container">
+  <h1>MainTask Index</h1>
+  <p><%= link_to "メインタスク作成", new_user_main_task_path %></p>
+  <p><%= link_to "カテゴリー一覧", categories_path %></p>
+<table class="table table-striped">
+  <tr>
+    <th>タスク</th>
+    <th>ステータス</th>
+    <th>完了ボタン</th>
+    <th>削除ボタン</th>
+    <th>Todayに追加ボタン</th>
+  </tr>
+  <% @main_tasks.each do |main_task| %>
+    <tr>
+      <td><%= main_task.main_task %></td>
+      <td><%= MainTask.statuses_i18n[main_task.status] %></td>
+      <td><%= link_to "完了" , task_status_to_done_path(main_task.user.id, main_task.id), method: :patch %></td>
+      <td>B</td>
+      <td>C</td>
+    </tr>
+  <% end %>
+</table>
+
+</div>
