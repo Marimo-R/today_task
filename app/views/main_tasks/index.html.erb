@@ -14,11 +14,22 @@
     <tr>
       <td><%= main_task.main_task %></td>
       <td><%= MainTask.statuses_i18n[main_task.status] %></td>
-      <td><%= link_to "完了" , task_status_to_done_path(main_task.user.id, main_task.id), method: :patch %></td>
-      <td>B</td>
-      <td>C</td>
+      <!-- メインタスク-ステータスの更新ボタン
+           未完の時→完了, 完了の時→未完に戻す, 削除済みの時→完了に戻すが表示される -->
+      <% if main_task.status == "incomplete" %>
+        <td><%= link_to "完了", task_status_to_done_path(main_task.user.id, main_task.id), method: :patch %></td>
+      <% elsif main_task.status == "done" %>
+        <td><%= link_to "未完に戻す", task_status_to_incomplete_path(main_task.user.id, main_task.id), method: :patch %></td>
+      <% elsif main_task.status == "deleted" %>
+        <td><%= link_to "完了に戻す", task_status_to_done_path(main_task.user.id, main_task.id), method: :patch %></td>
+      <% end %>
+      <td><%= link_to "削除", task_status_to_deleted_path(main_task.user.id, main_task.id), method: :patch %></td>
+      <% if main_task.is_today_task == false %>
+        <td><%= link_to "Todayに追加", add_today_path(main_task.user.id, main_task.id), method: :patch %></td>
+      <% elsif main_task.is_today_task == true %>
+        <td><%= link_to "Todayから削除", remove_today_path(main_task.user.id, main_task.id), method: :patch %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
-
 </div>
