@@ -7,7 +7,7 @@ class CreateMainTasks < ActiveRecord::Migration[6.1]
       t.integer :category_id
       t.string :main_task, null: false
       t.string :memo
-      t.datetime :due_date
+      t.date :due_date
       t.integer :status, null: false
       t.boolean :is_today_task, null: false
     end

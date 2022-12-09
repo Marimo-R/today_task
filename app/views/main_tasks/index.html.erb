@@ -1,6 +1,7 @@
 <div class="container">
-  <h1>MainTask Index</h1>
+  <h1>タスク一覧</h1>
   <p><%= link_to "メインタスク作成", new_user_main_task_path %></p>
+  <p><%= link_to "サブタスク作成", new_sub_task_path %></p>
   <p><%= link_to "カテゴリー一覧", categories_path %></p>
 <table class="table table-striped">
   <tr>
@@ -12,7 +13,7 @@
   </tr>
   <% @main_tasks.each do |main_task| %>
     <tr>
-      <td><%= main_task.main_task %></td>
+      <td><%= link_to main_task.main_task, user_main_task_path(main_task.user_id, main_task.id) %></td>
       <td><%= MainTask.statuses_i18n[main_task.status] %></td>
       <!-- メインタスク-ステータスの更新ボタン
            未完の時→完了, 完了の時→未完に戻す, 削除済みの時→完了に戻すが表示される -->
@@ -30,6 +31,27 @@
         <td><%= link_to "Todayから削除", remove_today_path(main_task.user.id, main_task.id), method: :patch %></td>
       <% end %>
     </tr>
+      <% main_task.sub_tasks.each do |sub_task| %>
+        <tr>
+          <td><%= link_to sub_task.sub_task, sub_task_path(sub_task.id) %></td>
+          <td><%= SubTask.statuses_i18n[sub_task.status] %></td>
+          <!-- メインタスク-ステータスの更新ボタン
+           未完の時→完了, 完了の時→未完に戻す, 削除済みの時→完了に戻すが表示される -->
+          <% if sub_task.status == "incomplete" %>
+            <td><%= link_to "完了", sub_task_status_to_done_path(sub_task.id), method: :patch %></td>
+          <% elsif sub_task.status == "done" %>
+            <td><%= link_to "未完に戻す", sub_task_status_to_incomplete_path(sub_task.id), method: :patch %></td>
+          <% elsif sub_task.status == "deleted" %>
+            <td><%= link_to "完了に戻す", sub_task_status_to_done_path(sub_task.id), method: :patch %></td>
+          <% end %>
+          <td><%= link_to "削除", sub_task_status_to_deleted_path(sub_task.id), method: :patch %></td>
+          <% if sub_task.is_today_task == false %>
+            <td><%= link_to "Todayに追加", sub_add_today_path(sub_task.id), method: :patch %></td>
+          <% elsif sub_task.is_today_task == true %>
+            <td><%= link_to "Todayから削除", sub_remove_today_path(sub_task.id), method: :patch %></td>
+          <% end %>
+        </tr>
+      <% end %>
   <% end %>
 </table>
 </div>

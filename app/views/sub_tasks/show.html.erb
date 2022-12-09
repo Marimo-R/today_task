@@ -1,34 +1,34 @@
 <div class="container">
   <div class="row mx-2">
-    <h1>メインタスク詳細ページ</h1>
+    <h1>サブタスク詳細ページ</h1>
   </div>
   <div class="border rounded px-2 my-2">
-    <p class="font-weight-bold">メインタスク</p>
-    <p><%= @main_task.main_task %></p>
+    <p class="font-weight-bold">サブタスク</p>
+    <p><%= @sub_task.sub_task %></p>
   </div>
   <div class="border rounded px-2 my-2">
-    <p class="font-weight-bold">カテゴリー</p>
-    <p><%= @main_task.category.category %></p>
+    <p class="font-weight-bold">関連メインタスク</p>
+    <p><%= @sub_task.main_task.main_task %></p>
   </div>
   <div class="border rounded px-2 my-2">
     <p class="font-weight-bold">メモ</p>
-    <p><%= @main_task.memo %></p>
+    <p><%= @sub_task.memo %></p>
   </div>
   <div class="border rounded px-2 my-2">
     <p class="font-weight-bold">期日</p>
-    <p><%= @main_task.due_date.strftime('%Y年%m月%d日') %></p>
+    <p><%= @sub_task.due_date.strftime('%Y年%m月%d日') %></p>
   </div>
   <div class="border rounded px-2 my-2">
     <p class="font-weight-bold">タスクステータス</p>
-    <p><%= MainTask.statuses_i18n[@main_task.status] %></p>
+    <p><%= SubTask.statuses_i18n[@sub_task.status] %></p>
   </div>
     <div class="border rounded px-2 my-2">
       <p class="font-weight-bold">Today Taskフラグ</p>
-    <% if @main_task.is_today_task == true %>
+    <% if @sub_task.is_today_task == true %>
       <p>はい</p>
-    <% elsif @main_task.is_today_task == false %>
+    <% elsif @sub_task.is_today_task == false %>
       <p>いいえ</p>
     <% end %>
   </div>
-  <%= link_to "編集", edit_user_main_task_path(@main_task.user_id,@main_task.id), class: "border border-dark btn-light btn-sm" %>
+  <%= link_to "編集", edit_sub_task_path(@sub_task.id), class: "border border-dark btn-light btn-sm" %>
 </div>

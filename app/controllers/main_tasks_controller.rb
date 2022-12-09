@@ -5,6 +5,7 @@ class MainTasksController < ApplicationController
   end
 
   def show
+    @main_task = MainTask.find(params[:id])
   end
 
   def new
@@ -33,7 +34,7 @@ class MainTasksController < ApplicationController
     @main_task.update(is_today_task: "true" )
     redirect_to user_main_tasks_path(@main_task.user.id)
   end
-  
+
   def remove_today
     @main_task = MainTask.find(params[:id])
     @main_task.update(is_today_task: "false" )

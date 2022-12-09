@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_05_052109) do
+ActiveRecord::Schema.define(version: 2022_12_07_050507) do
 
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -27,6 +27,17 @@ ActiveRecord::Schema.define(version: 2022_12_05_052109) do
     t.string "main_task", null: false
     t.string "memo"
     t.date "due_date"
+    t.integer "status", default: 0, null: false
+    t.boolean "is_today_task", null: false
+  end
+
+  create_table "sub_tasks", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "main_task_id", null: false
+    t.string "sub_task", null: false
+    t.string "memo"
+    t.datetime "due_date"
     t.integer "status", default: 0, null: false
     t.boolean "is_today_task", null: false
   end
