@@ -4,10 +4,10 @@
   </div>
   <%= form_with model: @sub_task, url: sub_tasks_path, method: :post do |f| %>
   <div class="border rounded px-2 my-2">
-    <p class="font-weight-bold"><%= f.label :main_task_id, "関連メインタスク" %></p>
-    <p><%= f.collection_select(:main_task_id, @main_tasks, :id, :main_task) %></p>
     <p class="font-weight-bold"><%= f.label :sub_task, "サブタスク(必須)" %></p>
     <p><%= f.text_field :sub_task, :size=>"40" %></p>
+    <p class="font-weight-bold"><%= f.label :main_task_id, "関連メインタスク" %></p>
+    <p><%= f.collection_select(:main_task_id, @main_tasks, :id, :main_task) %></p>
     <p class="font-weight-bold"><%= f.label :memo, "メモ" %></p>
     <p><%= f.text_area :memo, :size=>"43x2" %></p>
     <p class="font-weight-bold"><%= f.label :due_date, "期日" %></p>

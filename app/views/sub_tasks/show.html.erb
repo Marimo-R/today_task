@@ -2,7 +2,7 @@
   <div class="row mx-2">
     <h1>サブタスク詳細ページ</h1>
   </div>
-  <div class="border rounded px-2 my-2">
+ 
     <p class="font-weight-bold">サブタスク</p>
     <p><%= @sub_task.sub_task %></p>
   </div>
@@ -16,7 +16,11 @@
   </div>
   <div class="border rounded px-2 my-2">
     <p class="font-weight-bold">期日</p>
-    <p><%= @sub_task.due_date.strftime('%Y年%m月%d日') %></p>
+    <% if @sub_task.due_date.present? %>
+      <p><%= @sub_task.due_date.strftime('%Y年%m月%d日') %></p>
+    <% else %>
+      <p>期日がありません</p>
+    <% end %>
   </div>
   <div class="border rounded px-2 my-2">
     <p class="font-weight-bold">タスクステータス</p>

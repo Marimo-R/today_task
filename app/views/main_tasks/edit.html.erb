@@ -1,1 +1,24 @@
-<h1>MainTask edit</h1>
+<div class="container">
+  <div class="row mx-2">
+    <h1>メインタスク編集</h1>
+  </div>
+  <%= form_with model: @main_task, url: user_main_task_path(@main_task.user_id, @main_task.id), method: :patch do |f| %>
+    <div class="border rounded px-2 my-2">
+      <p class="font-weight-bold"><%= f.label :main_task, "メインタスク(必須)" %></p>
+      <p><%= f.text_field :main_task, :size=>"40" %></p>
+    </div>
+    <div class="border rounded px-2 my-2">
+      <p class="font-weight-bold"><%= f.label :category, "カテゴリー" %></p>
+      <p><%= f.collection_select(:category_id, @categories, :id, :category) %></p>
+    </div>
+    <div class="border rounded px-2 my-2">
+      <p class="font-weight-bold"><%= f.label :memo, "メモ" %></p>
+      <p><%= f.text_area :memo, :size=>"43x2" %></p>
+    </div>
+    <div class="border rounded px-2 my-2">
+      <p class="font-weight-bold"><%= f.label :due_date, "期日" %></p>
+      <p><%= f.date_field :due_date %></p>
+    </div>
+      <p class="font-weight-bold"><%= f.submit "更新" %></p>
+  <% end %>
+</div>

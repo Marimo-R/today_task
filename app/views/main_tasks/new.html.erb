@@ -7,7 +7,7 @@
     <p class="font-weight-bold"><%= f.label :category_id, "カテゴリー" %></p>
     <p><%= f.collection_select(:category_id, @categories, :id, :category) %></p>
     <p class="font-weight-bold"><%= f.label :main_task, "メインタスク(必須)" %></p>
-    <p><%= f.text_field :sub_task, :size=>"40" %></p>
+    <p><%= f.text_field :main_task, :size=>"40" %></p>
     <p class="font-weight-bold"><%= f.label :memo, "メモ" %></p>
     <p><%= f.text_area :memo, :size=>"43x2" %></p>
     <p class="font-weight-bold"><%= f.label :due_date, "期日" %></p>

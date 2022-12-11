@@ -13,14 +13,14 @@ Rails.application.routes.draw do
   get 'about' => 'homes#about'
   resources :categories, only: [:index, :create, :edit, :update, :destroy]
   resources :users, except: [:index, :show, :create, :new, :edit, :update, :destroy] do
-  resources :main_tasks, only: [:show, :index, :new, :create, :edit, :update]
+  resources :main_tasks, only: [:show, :index, :new, :create, :edit, :update, :destroy]
   end
   patch 'users/:user_id/main_tasks/:id/add_today' => 'main_tasks#add_today', as: 'add_today'
   patch 'users/:user_id/main_tasks/:id/remove_today' => 'main_tasks#remove_today', as: 'remove_today'
   patch 'users/:user_id/main_tasks/:id/task_status_to_incomplete' => 'main_tasks#task_status_to_incomplete', as: 'task_status_to_incomplete'
   patch 'users/:user_id/main_tasks/:id/task_status_to_done' => 'main_tasks#task_status_to_done', as: 'task_status_to_done'
   patch 'users/:user_id/main_tasks/:id/task_status_to_deleted' => 'main_tasks#task_status_to_deleted', as: 'task_status_to_deleted'
-  resources :sub_tasks, only: [:new, :create, :edit, :update, :show]
+  resources :sub_tasks, only: [:new, :create, :edit, :update, :show, :destroy]
   patch 'sub_tasks/:id/add_today' => 'sub_tasks#add_today', as: 'sub_add_today'
   patch 'sub_tasks/:id/remove_today' => 'sub_tasks#remove_today', as: 'sub_remove_today'
   patch 'sub_tasks/:id/task_status_to_incomplete' => 'sub_tasks#task_status_to_incomplete', as: 'sub_task_status_to_incomplete'
