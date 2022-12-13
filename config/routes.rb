@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   root to: 'homes#top'
   get 'about' => 'homes#about'
   resources :categories, only: [:index, :create, :edit, :update, :destroy]
+  get 'users/:user_id/main_tasks/today_index' => 'main_tasks#today_index', as: 'today_index'
   resources :users, except: [:index, :show, :create, :new, :edit, :update, :destroy] do
   resources :main_tasks, only: [:show, :index, :new, :create, :edit, :update, :destroy]
   end
