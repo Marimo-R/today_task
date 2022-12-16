@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row mx-2">
+    <h1>サブタスク編集</h1>
+  </div>
+  <%= form_with model: @sub_task, url: sub_task_path(@sub_task.id), method: :patch do |f| %>
+    <div class="border rounded px-2 my-2">
+      <p class="font-weight-bold"><%= f.label :sub_task, "サブタスク(必須)" %></p>
+      <p><%= f.text_field :sub_task, :size=>"40" %></p>
+    </div>
+    <div class="border rounded px-2 my-2">
+      <p class="font-weight-bold"><%= f.label :main_task_id, "関連メインタスク" %></p>
+      <p><%= f.collection_select(:main_task_id, @main_tasks, :id, :main_task) %></p>
+    </div>
+    <div class="border rounded px-2 my-2">
+      <p class="font-weight-bold"><%= f.label :memo, "メモ" %></p>
+      <p><%= f.text_area :memo, :size=>"43x2" %></p>
+    </div>
+    <div class="border rounded px-2 my-2">
+      <p class="font-weight-bold"><%= f.label :due_date, "期日" %></p>
+      <p><%= f.date_field :due_date %></p>
+    </div>
+      <p class="font-weight-bold"><%= f.submit "更新" %></p>
+  <% end %>
+</div>
