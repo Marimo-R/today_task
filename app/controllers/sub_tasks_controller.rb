@@ -30,19 +30,21 @@ class SubTasksController < ApplicationController
   def destroy
     @sub_task = SubTask.find(params[:id])
     @sub_task.destroy
-    redirect_to user_main_tasks_path(current_user.id)
+    redirect_to user_main_tasks_path(@sub_task.main_task.user_id, status: params[:status], category: params[:category], order: params[:order], today: params[:today])
   end
 
   def add_today
     @sub_task = SubTask.find(params[:id])
-    @sub_task.update(is_today_task: "true" )
-    redirect_to user_main_tasks_path(@sub_task.main_task.user_id)
+    @sub_task.update(is_today_task: "true")
+    @main_task = @sub_task.main_task
+    @main_task.update(is_today_task: "true")
+    redirect_to user_main_tasks_path(@sub_task.main_task.user_id, status: params[:status], category: params[:category], order: params[:order], today: params[:today])
   end
 
   def remove_today
     @sub_task = SubTask.find(params[:id])
     @sub_task.update(is_today_task: "false" )
-    redirect_to user_main_tasks_path(@sub_task.main_task.user_id)
+    redirect_to user_main_tasks_path(@sub_task.main_task.user_id, status: params[:status], category: params[:category], order: params[:order], today: params[:today])
   end
 
   def task_status_to_incomplete
@@ -50,7 +52,7 @@ class SubTasksController < ApplicationController
     @sub_task.update(status: 0)
     @main_task = @sub_task.main_task
     @main_task.update(status: 0)
-    redirect_to user_main_tasks_path(@sub_task.main_task.user_id)
+    redirect_to user_main_tasks_path(@sub_task.main_task.user_id, status: params[:status], category: params[:category], order: params[:order], today: params[:today])
   end
 
   def task_status_to_done
@@ -60,18 +62,17 @@ class SubTasksController < ApplicationController
     if @main_task.sub_tasks.count == @main_task.sub_tasks.where(status: 1).count
       @main_task.update(status: 1)
     end
-    redirect_to user_main_tasks_path(@sub_task.main_task.user_id)
+    redirect_to user_main_tasks_path(@sub_task.main_task.user_id, status: params[:status], category: params[:category], order: params[:order], today: params[:today])
   end
 
-  def task_status_to_deleted
-    @sub_task = SubTask.find(params[:id])
-    @sub_task.update(status: 2)
-    redirect_to user_main_tasks_path(@sub_task.main_task.user_id)
-  end
+  #def task_status_to_deleted
+    #@sub_task = SubTask.find(params[:id])
+    #@sub_task.update(status: 2)
+   #redirect_to user_main_tasks_path(@sub_task.main_task.user_id, status: params[:status], category: params[:category], order: params[:order])
+  #end
 
   private
   def params_sub_task
      params.require(:sub_task).permit(:main_task_id, :sub_task, :memo, :due_date, :is_today_task, :status)
   end
-
 end
