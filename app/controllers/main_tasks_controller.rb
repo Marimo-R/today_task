@@ -35,8 +35,12 @@ class MainTasksController < ApplicationController
   def create
     @main_task = MainTask.new(params_main_task)
     @main_task.user_id = current_user.id
-    @main_task.save
-    redirect_to user_main_tasks_path(@main_task.user_id)
+    if @main_task.save
+      redirect_to user_main_tasks_path(@main_task.user_id)
+    else
+      @categories = Category.where(user_id: params[:user_id])
+      render :new
+    end
   end
 
   def edit
@@ -54,6 +58,10 @@ class MainTasksController < ApplicationController
     @main_task = MainTask.find(params[:id])
     @main_task.destroy
     redirect_to user_main_tasks_path(@main_task.user_id, status: params[:status], category: params[:category], order: params[:order], today: params[:today])
+  end
+
+  def calendar
+    @main_tasks = MainTask.where(user_id: params[:user_id])
   end
 
   def add_today
