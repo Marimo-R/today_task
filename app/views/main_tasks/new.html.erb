@@ -1,22 +1,40 @@
 <div class="container">
+  <% if @main_task.errors.any? %>
+  <%= @main_task.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @main_task.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
   <div class="row mx-2">
     <h1>メインタスク作成</h1>
   </div>
   <%= form_with model: @main_task, url: user_main_tasks_path(current_user.id), method: :post do |f| %>
   <div class="border rounded px-2 my-2">
-    <p class="font-weight-bold"><%= f.label :category_id, "カテゴリー" %></p>
-    <p><%= f.collection_select(:category_id, @categories, :id, :category) %></p>
-    <p class="font-weight-bold"><%= f.label :main_task, "メインタスク(必須)" %></p>
-    <p><%= f.text_field :main_task, :size=>"40" %></p>
-    <p class="font-weight-bold"><%= f.label :memo, "メモ" %></p>
-    <p><%= f.text_area :memo, :size=>"43x2" %></p>
-    <p class="font-weight-bold"><%= f.label :due_date, "期日" %></p>
-    <p><%= f.date_field :due_date %></p>
-    <p class="font-weight-bold">
-      <%= f.label :is_today_task, "TodayTaskに追加する" %>
+    <div class="mb-2">
+      <%= f.label :category_id, "カテゴリー", class: "font-weight-bold" %><br>
+      <%= f.collection_select(:category_id, @categories, :id, :category) %>
+    </div>
+    <div class="mb-2">
+      <div><%= f.label :main_task, "メインタスク(必須)", class: "font-weight-bold" %></div>
+      <%= f.text_field :main_task, :size=>"40" %>
+    </div>
+    <div class="mb-2">
+    <%= f.label :memo, "メモ", class: "font-weight-bold" %><br>
+    <%= f.text_area :memo, :size=>"43x2" %>
+    </div>
+    <div class="mb-2">
+      <%= f.label :due_date, "期日", class: "font-weight-bold" %><br>
+      <%= f.date_field :due_date %>
+    </div>
+    <div class="mb-2">
+      <%= f.label :is_today_task, "TodayTaskに追加する", class: "font-weight-bold" %>
       <%= f.check_box :is_today_task, {}, "true", "false" %>
-    </p>
-    <p class="font-weight-bold"><%= f.submit "作成" %></p>
+    </div>
+    <div class="mb-2">
+      <%= f.submit "作成" %>
+    </div>
   </div>
   <% end %>
 </div>
