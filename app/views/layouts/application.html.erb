@@ -33,6 +33,9 @@
               <%= link_to "会員情報", users_my_page_path, class:"nav-link" %>
             </li>
             <li class="nav-item m-2 border border-dark rounded-lg">
+              <%= link_to "他ユーザー", relationships_path(current_user.id), class:"nav-link" %>
+            </li>
+            <li class="nav-item m-2 border border-dark rounded-lg">
               <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"nav-link" %>
             </li>
             <% else %>
