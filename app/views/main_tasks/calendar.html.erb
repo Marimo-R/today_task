@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>メインタスク カレンダー</h2>
+  <h2><%= @user.name %>さんのメインタスク カレンダー</h2>
   <%= month_calendar(attribute: :due_date, events: @main_tasks) do |date, main_tasks| %>
     <%= date.day %>
     <% main_tasks.each do |main_task| %>

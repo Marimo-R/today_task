@@ -1,9 +1,11 @@
 <div class="container">
-  <div class="mb-2">
-    <%= link_to "メインタスク作成", new_user_main_task_path, class: "btn-sm btn-primary" %>
-    <%= link_to "サブタスク作成", new_sub_task_path, class: "btn-sm btn-primary" %>
-    <%= link_to "カテゴリー一覧", categories_path, class: "btn-sm btn-primary" %>
-  </div>
+  <% if params[:user_id].to_i == current_user.id %>
+    <div class="mb-2">
+      <%= link_to "メインタスク作成", new_user_main_task_path, class: "btn-sm btn-primary" %>
+      <%= link_to "サブタスク作成", new_sub_task_path, class: "btn-sm btn-primary" %>
+      <%= link_to "カテゴリー一覧", categories_path, class: "btn-sm btn-primary" %>
+    </div>
+  <% end %>
   <div>
     <% if params[:today].present? %>
       <%= link_to "Today以外も表示", user_main_tasks_path(@user.id, status: params[:status], category: params[:category], order: params[:order]), class: "btn-sm btn-warning" %>
@@ -63,9 +65,9 @@
   <div class="mb-2">
       <h2>
         <% if params[:today].present? %>
-          Todaya's Task
+          <%= @user.name %>Todaya's Task
         <% else %>
-          タスク一覧
+          <%= @user.name %>さんのタスク一覧
       <% end %>
       </h2>
     </div>
@@ -79,9 +81,11 @@
           <th>カテゴリ</th>
           <th>期日</th>
           <th>ステータス</th>
-          <th>完了ボタン</th>
-          <th>削除ボタン</th>
-          <th>Todayに追加ボタン</th>
+          <% if params[:user_id].to_i == current_user.id %>
+            <th>完了ボタン</th>
+            <th>削除ボタン</th>
+            <th>Todayに追加ボタン</th>
+          <% end %>
         </tr>
       </thead>
       <tbody>
@@ -116,21 +120,23 @@
             <!--六列目-->
             <!-- メインタスク-ステータスの更新ボタン
                  未完の時→完了, 完了の時→未完に戻す, 削除済みの時→完了に戻すが表示される -->
-            <% if main_task.status == "incomplete" %>
-              <td class="text-center align-middle"><%= link_to "完了",
-              task_status_to_done_path(main_task.user.id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link" %></td>
-            <% elsif main_task.status == "done" %>
-              <td class="text-center align-middle"><%= link_to "未完に戻す", task_status_to_incomplete_path(main_task.user.id, main_task.id, status: params[:status], catergory: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link" %></td>
-            <% elsif main_task.status == "deleted" %>
-              <td class="text-center align-middle"><%= link_to "完了に戻す", task_status_to_done_path(main_task.user.id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link" %></td>
-            <% end %>
-            <!--七列目-->
-            <td class="text-center align-middle"><%= link_to "削除", user_main_task_path(main_task.user_id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :delete, class: "btn-sm btn-link" %></td>
-            <!--八列目-->
-            <% if main_task.is_today_task == false %>
-              <td class="text-center align-middle"><%= link_to "Todayに追加", add_today_path(main_task.user.id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link" %></td>
-            <% elsif main_task.is_today_task == true %>
-              <td class="text-center align-middle">♥<%= link_to "Todayから削除", remove_today_path(main_task.user.id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link" %></td>
+            <% if params[:user_id].to_i == current_user.id %>
+              <% if main_task.status == "incomplete" %>
+                <td class="text-center align-middle"><%= link_to "完了",
+                task_status_to_done_path(main_task.user.id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link" %></td>
+              <% elsif main_task.status == "done" %>
+                <td class="text-center align-middle"><%= link_to "未完に戻す", task_status_to_incomplete_path(main_task.user.id, main_task.id, status: params[:status], catergory: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link" %></td>
+              <% elsif main_task.status == "deleted" %>
+                <td class="text-center align-middle"><%= link_to "完了に戻す", task_status_to_done_path(main_task.user.id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link" %></td>
+              <% end %>
+              <!--七列目-->
+              <td class="text-center align-middle"><%= link_to "削除", user_main_task_path(main_task.user_id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :delete, class: "btn-sm btn-link" %></td>
+              <!--八列目-->
+              <% if main_task.is_today_task == false %>
+                <td class="text-center align-middle"><%= link_to "Todayに追加", add_today_path(main_task.user.id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link" %></td>
+              <% elsif main_task.is_today_task == true %>
+                <td class="text-center align-middle">♥<%= link_to "Todayから削除", remove_today_path(main_task.user.id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link" %></td>
+              <% end %>
             <% end %>
           </tr>
             <% sub_tasks = main_task.sub_tasks %>
@@ -162,20 +168,22 @@
                 <!--六列目-->
                 <!-- メインタスク-ステータスの更新ボタン
                  未完の時→完了, 完了の時→未完に戻す, 削除済みの時→完了に戻すが表示される -->
-                <% if sub_task.status == "incomplete" %>
-                  <td class="text-center align-middle"><%= link_to "完了", sub_task_status_to_done_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
-                <% elsif sub_task.status == "done" %>
-                  <td class="text-center align-middle"><%= link_to "未完に戻す", sub_task_status_to_incomplete_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
-                <% elsif sub_task.status == "deleted" %>
-                  <td class="text-center align-middle"><%= link_to "完了に戻す", sub_task_status_to_done_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
-                <% end %>
-                <!--七列目-->
-                <td class="text-center align-middle"><%= link_to "削除", sub_task_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :delete , class: "btn-sm btn-link"%></td>
-                <!--八列目-->
-                <% if sub_task.is_today_task == false %>
-                  <td class="text-center align-middle"><%= link_to "Todayに追加", sub_add_today_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
-                <% elsif sub_task.is_today_task == true %>
-                  <td class="text-center align-middle">♥<%= link_to "Todayから削除", sub_remove_today_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
+                <% if params[:user_id].to_i == current_user.id %>
+                  <% if sub_task.status == "incomplete" %>
+                    <td class="text-center align-middle"><%= link_to "完了", sub_task_status_to_done_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
+                  <% elsif sub_task.status == "done" %>
+                    <td class="text-center align-middle"><%= link_to "未完に戻す", sub_task_status_to_incomplete_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
+                  <% elsif sub_task.status == "deleted" %>
+                    <td class="text-center align-middle"><%= link_to "完了に戻す", sub_task_status_to_done_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
+                  <% end %>
+                  <!--七列目-->
+                  <td class="text-center align-middle"><%= link_to "削除", sub_task_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :delete , class: "btn-sm btn-link"%></td>
+                  <!--八列目-->
+                  <% if sub_task.is_today_task == false %>
+                    <td class="text-center align-middle"><%= link_to "Todayに追加", sub_add_today_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
+                  <% elsif sub_task.is_today_task == true %>
+                    <td class="text-center align-middle">♥<%= link_to "Todayから削除", sub_remove_today_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
+                  <% end %>
                 <% end %>
               </tr>
             <% end %>

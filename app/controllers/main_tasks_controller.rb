@@ -61,6 +61,7 @@ class MainTasksController < ApplicationController
   end
 
   def calendar
+    @user = User.find(params[:user_id])
     @main_tasks = MainTask.where(user_id: params[:user_id])
   end
 
