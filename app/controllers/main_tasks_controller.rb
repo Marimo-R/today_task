@@ -1,4 +1,6 @@
 class MainTasksController < ApplicationController
+  before_action :is_matching_login_user_or_follower
+
   def index
     @user = User.find(params[:user_id])
     @main_tasks = @user.main_tasks
@@ -61,6 +63,7 @@ class MainTasksController < ApplicationController
   end
 
   def calendar
+    @user = User.find(params[:user_id])
     @main_tasks = MainTask.where(user_id: params[:user_id])
   end
 

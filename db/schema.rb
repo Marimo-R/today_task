@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_07_050507) do
+ActiveRecord::Schema.define(version: 2022_12_21_025225) do
 
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -29,6 +29,17 @@ ActiveRecord::Schema.define(version: 2022_12_07_050507) do
     t.date "due_date"
     t.integer "status", default: 0, null: false
     t.boolean "is_today_task", null: false
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["followed_id"], name: "index_relationships_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
   create_table "sub_tasks", force: :cascade do |t|

@@ -28,5 +28,10 @@ Rails.application.routes.draw do
   patch 'sub_tasks/:id/task_status_to_incomplete' => 'sub_tasks#task_status_to_incomplete', as: 'sub_task_status_to_incomplete'
   patch 'sub_tasks/:id/task_status_to_done' => 'sub_tasks#task_status_to_done', as: 'sub_task_status_to_done'
   patch 'sub_tasks/:id/task_status_to_deleted' => 'sub_tasks#task_status_to_deleted', as: 'sub_task_status_to_deleted'
+
+  get 'users/:user_id/relationships' => 'relationships#index', as: 'relationships'
+  post 'relationships' => 'relationships#follow_request', as: 'relationships_request'
+  delete 'relationships/:id' => 'relationships#unfollow', as: 'relationships_unfollow'
+  patch 'relationships/:id' => 'relationships#accept', as: 'relationships_accept'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
