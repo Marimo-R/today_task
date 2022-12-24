@@ -1,5 +1,6 @@
 class MainTasksController < ApplicationController
-  before_action :is_matching_login_user_or_follower
+  before_action :is_matching_login_user_or_follower, only: [:index, :show, :calendar]
+  before_action :is_match_login_user, except: [:index, :show, :calendar]
 
   def index
     @user = User.find(params[:user_id])
@@ -127,5 +128,13 @@ class MainTasksController < ApplicationController
   private
   def params_main_task
     params.require(:main_task).permit(:category_id, :main_task, :memo, :due_date, :is_today_task, :user_id, :status)
+  end
+
+  def is_match_login_user
+    user = User.find(params[:user_id])
+    login_user = current_user
+    if(user.id != login_user.id)
+      redirect_to root_path
+    end
   end
 end

@@ -1,4 +1,7 @@
 class SubTasksController < ApplicationController
+  before_action :is_matching_login_user_or_follower_for_sub_task, only: [:show]
+  before_action :is_match_login_user, except: [:new, :create, :show]
+
   def new
     @sub_task = SubTask.new
     @main_tasks = MainTask.where(user_id: current_user.id)
@@ -75,4 +78,47 @@ class SubTasksController < ApplicationController
   def params_sub_task
      params.require(:sub_task).permit(:main_task_id, :sub_task, :memo, :due_date, :is_today_task, :status)
   end
+
+  def find_user_from_sub_task
+    sub_task = SubTask.find(params[:id])
+    main_task = sub_task.main_task
+    @user = main_task.user
+  end
+
+  def is_match_login_user
+    find_user_from_sub_task
+    #sub_task = SubTask.find(params[:id])
+    #main_task = sub_task.main_task
+    #user = main_task.user
+    login_user = current_user
+    if(@user.id != login_user.id)
+      redirect_to root_path
+    end
+  end
+
+  def not_following_for_sub_task?
+    find_user_from_sub_task
+    #sub_task = SubTask.find(params[:id])
+    #main_task = sub_task.main_task
+    #user = main_task.user
+    if current_user.following.include?(@user)
+      relationship = Relationship.find_by(follower_id: current_user.id, followed_id: @user.id)
+      return relationship.status == 0
+    else
+      current_user.following.exclude?(user)
+    end
+  end
+
+  def is_matching_login_user_or_follower_for_sub_task
+    find_user_from_sub_task
+    #sub_task = SubTask.find(params[:id])
+    #main_task = sub_task.main_task
+    #user = main_task.user
+    user_id = @user.id
+    login_user_id = current_user.id
+    if(user_id != login_user_id) && (not_following_for_sub_task?)
+      redirect_to root_path
+    end
+  end
+
 end

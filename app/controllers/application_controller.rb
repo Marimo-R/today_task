@@ -1,10 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!, except: [:top, :about]
 
-  def following?(other_user)
-    following.include?(other_user)
-  end
-
   def not_following?
     user = User.find(params[:user_id])
     if current_user.following.include?(user)
