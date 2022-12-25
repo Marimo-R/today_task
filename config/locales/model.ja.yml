@@ -2,7 +2,8 @@ ja:
   activerecord:
     models:
       user: ユーザー # view側： User.model_name.human => "ユーザ" / t("activerecord.models.user")と同じ
-      board: 掲示板
+      category: カテゴリー
+      main_task: メインタスク
     attributes:
       user:
         id: ID
@@ -13,3 +14,7 @@ ja:
         crypted_password: パスワード
         created_at: 作成日
         updated_at: 更新日
+      category:
+        category: カテゴリー
+      main_task:
+        main_task: メインタスク

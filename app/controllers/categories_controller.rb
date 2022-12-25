@@ -4,8 +4,12 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(params_category)
     @category.user_id = current_user.id
-    @category.save
-    redirect_to categories_path
+    if @category.save
+      redirect_to categories_path
+    else
+      @categories = current_user.categories
+      render :index
+    end
   end
 
   def index

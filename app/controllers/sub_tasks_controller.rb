@@ -21,7 +21,7 @@ class SubTasksController < ApplicationController
 
   def edit
     @sub_task = SubTask.find(params[:id])
-    @main_tasks = MainTask.where(user_id: params[current_user.id])
+    @main_tasks = MainTask.where(user_id: current_user.id)
   end
 
   def update
