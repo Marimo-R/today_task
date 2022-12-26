@@ -16,7 +16,7 @@
   <div class="border rounded px-2 my-2">
     <div class="mb-2">
       <%= f.label :category_id, "カテゴリー", class: "font-weight-bold" %><br>
-      <%= f.collection_select(:category_id, @categories, :id, :category) %>
+      <%= f.collection_select(:category_id, @categories, :id, :category, {include_blank: "なし"}) %>
     </div>
     <div class="mb-2">
       <div><%= f.label :main_task, "メインタスク(必須)", class: "font-weight-bold" %></div>

@@ -9,10 +9,15 @@ class SubTasksController < ApplicationController
 
   def create
     @sub_task = SubTask.new(params_sub_task)
-    @sub_task.save
-    @main_task = @sub_task.main_task
-    @main_task.update(status: 0)
-    redirect_to user_main_tasks_path(current_user.id)
+    if @sub_task.save
+      @main_task = @sub_task.main_task
+      @main_task.update(status: 0)
+      flash[:success] = "サブタスクを作成しました"
+      redirect_to user_main_tasks_path(current_user.id)
+    else
+      @main_tasks = MainTask.where(user_id: current_user.id)
+      render :new
+    end
   end
 
   def show
@@ -33,6 +38,7 @@ class SubTasksController < ApplicationController
   def destroy
     @sub_task = SubTask.find(params[:id])
     @sub_task.destroy
+    flash[:danger] = "サブタスクを削除しました"
     redirect_to user_main_tasks_path(@sub_task.main_task.user_id, status: params[:status], category: params[:category], order: params[:order], today: params[:today])
   end
 

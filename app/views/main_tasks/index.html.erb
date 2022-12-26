@@ -102,7 +102,11 @@
             <!--二列目-->
             <td class="align-middle"><%= link_to main_task.main_task, user_main_task_path(main_task.user_id, main_task.id) %></td>
             <!--三列目-->
-            <td class="align-middle"><%= main_task.category.category %></td>
+            <% if main_task.category.present? %>
+              <td class="align-middle"><%= main_task.category.category %></td>
+            <% else %>
+              <td class="align-middle">なし</td>
+            <% end %>
             <!--四列目-->
             <% if main_task.due_date.present? %>
               <td class="align-middle"><%= main_task.due_date.strftime('%Y年%m月%d日') %></td>

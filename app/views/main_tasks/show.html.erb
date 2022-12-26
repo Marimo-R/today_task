@@ -12,7 +12,11 @@
   </div>
   <div class="border rounded px-2 my-2">
     <p class="font-weight-bold">メモ</p>
-    <p><%= @main_task.memo %></p>
+    <% if @main_task.memo.present? %>
+      <p><%= @main_task.memo %></p>
+    <% else %>
+      <p>メモはありません</p>
+    <% end %>
   </div>
   <div class="border rounded px-2 my-2">
     <p class="font-weight-bold">期日</p>

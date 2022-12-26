@@ -39,6 +39,7 @@ class MainTasksController < ApplicationController
     @main_task = MainTask.new(params_main_task)
     @main_task.user_id = current_user.id
     if @main_task.save
+      flash[:success] = "メインタスクを作成しました"
       redirect_to user_main_tasks_path(@main_task.user_id)
     else
       @categories = Category.where(user_id: params[:user_id])
@@ -54,12 +55,14 @@ class MainTasksController < ApplicationController
   def update
     @main_task = MainTask.find(params[:id])
     @main_task.update(params_main_task)
+    flash[:success] = "メインタスクを更新しました"
     redirect_to user_main_tasks_path(@main_task.user_id)
   end
 
   def destroy
     @main_task = MainTask.find(params[:id])
     @main_task.destroy
+    flash[:danger] = "メインタスクを削除しました"
     redirect_to user_main_tasks_path(@main_task.user_id, status: params[:status], category: params[:category], order: params[:order], today: params[:today])
   end
 

@@ -5,6 +5,7 @@ class CategoriesController < ApplicationController
     @category = Category.new(params_category)
     @category.user_id = current_user.id
     if @category.save
+      flash[:success] = "カテゴリーを作成しました"
       redirect_to categories_path
     else
       @categories = current_user.categories
@@ -24,12 +25,14 @@ class CategoriesController < ApplicationController
   def update
     @category = Category.find(params[:id])
     @category.update(params_category)
+    flash[:success] = "カテゴリーを編集しました"
     redirect_to categories_path
   end
 
   def destroy
     @category = Category.find(params[:id])
     @category.destroy
+    flash[:danger] = "カテゴリーを削除しました"
     redirect_to categories_path
   end
 

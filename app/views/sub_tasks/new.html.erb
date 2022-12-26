@@ -1,4 +1,14 @@
 <div class="container">
+  <% if @sub_task.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <%= @sub_task.errors.count %>件のエラーが発生しました
+      <ul>
+        <% @sub_task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="row mx-2">
     <h1>サブタスク作成</h1>
   </div>
@@ -7,7 +17,7 @@
     <p class="font-weight-bold"><%= f.label :sub_task, "サブタスク(必須)" %></p>
     <p><%= f.text_field :sub_task, :size=>"40" %></p>
     <p class="font-weight-bold"><%= f.label :main_task_id, "関連メインタスク" %></p>
-    <p><%= f.collection_select(:main_task_id, @main_tasks, :id, :main_task) %></p>
+    <p><%= f.collection_select(:main_task_id, @main_tasks, :id, :main_task, {include_blank: "選択してください"}) %></p>
     <p class="font-weight-bold"><%= f.label :memo, "メモ" %></p>
     <p><%= f.text_area :memo, :size=>"43x2" %></p>
     <p class="font-weight-bold"><%= f.label :due_date, "期日" %></p>
