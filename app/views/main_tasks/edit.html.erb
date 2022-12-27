@@ -1,4 +1,14 @@
 <div class="container">
+  <% if @main_task.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <%= @main_task.errors.count %>件のエラーが発生しました
+      <ul>
+        <% @main_task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="row mx-2">
     <h1>メインタスク編集</h1>
   </div>

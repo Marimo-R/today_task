@@ -31,8 +31,12 @@ class SubTasksController < ApplicationController
 
   def update
     @sub_task = SubTask.find(params[:id])
-    @sub_task.update(params_sub_task)
-    redirect_to sub_task_path(@sub_task.id)
+    if @sub_task.update(params_sub_task)
+      redirect_to sub_task_path(@sub_task.id)
+    else
+      @main_tasks = MainTask.where(user_id: current_user.id)
+      render :edit
+    end
   end
 
   def destroy
