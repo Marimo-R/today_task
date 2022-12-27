@@ -1,4 +1,14 @@
 <div class="container">
+  <% if @relationship.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <%= @relationship.errors.count %>件のエラーが発生しました
+      <ul>
+        <% @relationship.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <h2>ユーザー連携</h2>
   <div class="border p-2 my-2 rounded">
     <h3>新規リクエスト</h3>

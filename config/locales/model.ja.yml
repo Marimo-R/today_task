@@ -5,6 +5,7 @@ ja:
       category: カテゴリー
       main_task: メインタスク
       sub_task: サブタスク
+      relationship: ユーザー連携
     attributes:
       user:
         id: ID
@@ -22,3 +23,5 @@ ja:
       sub_task:
         sub_task: サブタスク
         main_task: 関連メインタスク
+      relationship:
+        follower_id: ユーザー連携
