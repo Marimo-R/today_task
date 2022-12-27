@@ -1,15 +1,25 @@
 <div class="container">
-  <div class="row mx-2">
-  <h2>カテゴリー一覧</h2>
-  </div>
-  <div class="mt-4">
-  <%= form_with model: @category, url: categories_path, method: :post do |f| %>
-  <%= f.text_field :category, placeholder: "カテゴリー名" %>
-  <%= f.submit "新規作成" %>
+  <% if @category.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+    <%= @category.errors.count %>件のエラーが発生しました
+    <ul>
+      <% @category.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+    </div>
   <% end %>
+  <div class="row mx-2">
+    <h2>カテゴリー一覧</h2>
+  </div>
+  <div class="mt-2">
+    <%= form_with model: @category, url: categories_path, method: :post do |f| %>
+    <%= f.text_field :category, placeholder: "カテゴリー名" %>
+    <%= f.submit "新規作成" %>
+    <% end %>
   </div>
   <% if @categories.present? %>
-    <div class="mt-4">
+    <div class="mt-2">
       <table class="table table-striped">
         <tr>
           <th>カテゴリー名</th>

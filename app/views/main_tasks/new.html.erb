@@ -1,12 +1,14 @@
 <div class="container">
   <% if @main_task.errors.any? %>
-  <%= @main_task.errors.count %>件のエラーが発生しました
-  <ul>
-    <% @main_task.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+    <div class="alert alert-danger" role="alert">
+      <%= @main_task.errors.count %>件のエラーが発生しました
+      <ul>
+        <% @main_task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="row mx-2">
     <h1>メインタスク作成</h1>
   </div>
@@ -14,7 +16,7 @@
   <div class="border rounded px-2 my-2">
     <div class="mb-2">
       <%= f.label :category_id, "カテゴリー", class: "font-weight-bold" %><br>
-      <%= f.collection_select(:category_id, @categories, :id, :category) %>
+      <%= f.collection_select(:category_id, @categories, :id, :category, {include_blank: "なし"}) %>
     </div>
     <div class="mb-2">
       <div><%= f.label :main_task, "メインタスク(必須)", class: "font-weight-bold" %></div>

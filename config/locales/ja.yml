@@ -1,3 +1,4 @@
+#enum
  ja:
   enums:
     main_task:
@@ -10,6 +11,8 @@
         incomplete: "未完"
         done: "完了"
         deleted: "削除済み"
+
+#simple calendar
 ja:
   date:
     abbr_day_names:
