@@ -32,7 +32,8 @@ class SubTasksController < ApplicationController
   def update
     @sub_task = SubTask.find(params[:id])
     if @sub_task.update(params_sub_task)
-      redirect_to sub_task_path(@sub_task.id)
+      flash[:success] = "サブタスクを更新しました"
+      redirect_to user_main_tasks_path(@sub_task.main_task.user_id)
     else
       @main_tasks = MainTask.where(user_id: current_user.id)
       render :edit

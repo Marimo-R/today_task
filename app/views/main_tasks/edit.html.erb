@@ -19,7 +19,7 @@
     </div>
     <div class="border rounded px-2 my-2">
       <p class="font-weight-bold"><%= f.label :category, "カテゴリー" %></p>
-      <p><%= f.collection_select(:category_id, @categories, :id, :category) %></p>
+      <p><%= f.collection_select(:category_id, @categories, :id, :category, {include_blank: "なし"}) %></p>
     </div>
     <div class="border rounded px-2 my-2">
       <p class="font-weight-bold"><%= f.label :memo, "メモ" %></p>
