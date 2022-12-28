@@ -20,31 +20,35 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
             <% if user_signed_in? %>
-            <li class="nav-item m-2 border border-dark rounded-lg">
-              <%= link_to "Today's Task", user_main_tasks_path(current_user.id, today: 1), class:"nav-link" %>
-            </li>
-            <li class="nav-item m-2 border border-dark rounded-lg">
-              <%= link_to "タスク一覧", user_main_tasks_path(current_user.id), class:"nav-link" %>
-            </li>
-            <li class="nav-item m-2 border border-dark rounded-lg">
-              <%= link_to "カレンダー", calendar_path(current_user.id), class:"nav-link" %>
-            </li>
-            <li class="nav-item m-2 border border-dark rounded-lg">
-              <%= link_to "会員情報", users_my_page_path, class:"nav-link" %>
-            </li>
-            <li class="nav-item m-2 border border-dark rounded-lg">
-              <%= link_to "他ユーザー", relationships_path(current_user.id), class:"nav-link" %>
-            </li>
-            <li class="nav-item m-2 border border-dark rounded-lg">
-              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"nav-link" %>
-            </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "Today's Task", user_main_tasks_path(current_user.id, today: 1), class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "タスク一覧", user_main_tasks_path(current_user.id), class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "カレンダー", calendar_path(current_user.id), class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "会員情報", users_my_page_path, class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "他ユーザー", relationships_path(current_user.id), class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"nav-link" %>
+              </li>
+            <% elsif admin_signed_in? %>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "Adminログアウト", destroy_admin_session_path, method: :delete, class:"nav-link" %>
+              </li>
             <% else %>
-            <li class="nav-item m-2 border border-dark rounded-lg">
-              <%= link_to "ログイン", new_user_session_path, class:"nav-link" %>
-            </li>
-            <li class="nav-item m-2 border border-dark rounded-lg">
-              <%= link_to "新規登録", new_user_registration_path, class:"nav-link" %>
-            </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "ログイン", new_user_session_path, class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "新規登録", new_user_registration_path, class:"nav-link" %>
+              </li>
             <% end %>
           </ul>
         </div>

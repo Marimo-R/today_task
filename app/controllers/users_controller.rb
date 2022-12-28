@@ -9,8 +9,21 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    @user.update(params_user)
-    redirect_to users_my_page_path
+    if @user.update(params_user)
+      redirect_to users_my_page_path
+    else
+      render :edit
+    end
+  end
+  
+  def unsubscribe
+  end
+  
+  def withdrawal
+    @user = current_user
+    @user.update(is_deleted: true)
+    reset_session
+    redirect_to root_path
   end
 
   private

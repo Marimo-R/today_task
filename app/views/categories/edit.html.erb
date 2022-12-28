@@ -1,4 +1,14 @@
 <div class="container">
+  <% if @category.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <%= @category.errors.count %>件のエラーが発生しました
+      <ul>
+        <% @category.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="row mx-2">
     <h2>カテゴリー編集</h2>
   </div>

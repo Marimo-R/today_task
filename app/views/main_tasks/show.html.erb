@@ -8,7 +8,11 @@
   </div>
   <div class="border rounded px-2 my-2">
     <p class="font-weight-bold">カテゴリー</p>
-    <p><%= @main_task.category.category %></p>
+    <% if @main_task.category.present? %>
+      <p><%= @main_task.category.category %></p>
+    <% else %>
+      <p>なし</p>
+    <% end %>
   </div>
   <div class="border rounded px-2 my-2">
     <p class="font-weight-bold">メモ</p>

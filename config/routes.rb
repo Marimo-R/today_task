@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
+  namespace :admins do
+    get 'toppages/index'
+  end
   devise_for :users,skip: [:passwords], controllers: {
     registrations: "users/registrations",
     sessions: 'users/sessions'
+  }
+  devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
+  sessions: "admin/sessions"
   }
 
   get 'users/my_page' => 'users#show'
@@ -34,4 +40,8 @@ Rails.application.routes.draw do
   delete 'relationships/:id' => 'relationships#unfollow', as: 'relationships_unfollow'
   patch 'relationships/:id' => 'relationships#accept', as: 'relationships_accept'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  namespace :admin do
+    root "toppages#top"
+  end
 end

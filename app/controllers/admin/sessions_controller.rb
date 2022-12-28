@@ -1,17 +1,7 @@
 # frozen_string_literal: true
 
-class Users::SessionsController < Devise::SessionsController
+class Admin::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
-  before_action :user_state, only: [:create]
-
-  def user_state
-    @user = User.find_by(email: params[:user][:email])
-    return if !@user
-    if @user.valid_password?(params[:user][:password]) && !@user.is_deleted
-    else
-       redirect_to new_user_registration_path
-    end
-  end
 
   # GET /resource/sign_in
   # def new
