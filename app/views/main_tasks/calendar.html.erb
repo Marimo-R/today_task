@@ -1,0 +1,11 @@
+<div class="container">
+  <h2><%= @user.name %>さんのメインタスク カレンダー</h2>
+  <%= month_calendar(attribute: :due_date, events: @main_tasks) do |date, main_tasks| %>
+    <%= date.day %>
+    <% main_tasks.each do |main_task| %>
+      <div class="calendar-item">
+        ・<%= link_to main_task.main_task.truncate(9), user_main_task_path(main_task.user_id, main_task.id) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

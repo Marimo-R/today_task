@@ -1,0 +1,27 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー # view側： User.model_name.human => "ユーザ" / t("activerecord.models.user")と同じ
+      category: カテゴリー
+      main_task: メインタスク
+      sub_task: サブタスク
+      relationship: ユーザー連携
+    attributes:
+      user:
+        id: ID
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        encrypted_password: パスワード
+        crypted_password: パスワード
+        created_at: 作成日
+        updated_at: 更新日
+      category:
+        category: カテゴリー
+      main_task:
+        main_task: メインタスク
+      sub_task:
+        sub_task: サブタスク
+        main_task: 関連メインタスク
+      relationship:
+        follower_id: ユーザー連携

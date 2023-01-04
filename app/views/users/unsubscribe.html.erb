@@ -1,0 +1,8 @@
+<div class="container">
+  <p>本当に退会しますか？</p>
+  <P>退会すると、会員情報や</P>
+  <p>これまでの購入履歴が閲覧できなくなります。</p>
+  <p>退会する場合は、「退会する」をクリックしてください。</p>
+  <%= link_to "退会しない", users_my_page_path, class: "border border-dark btn-light btn-sm" %>
+  <%= link_to "退会する", users_withdrawal_path, method: :patch, "data-confirm"=>"本当に退会しますか？", class: "border border-dark btn-light btn-sm" %>
+</div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MTodayTask</title>
+    <title>Today'sTask</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,56 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header class="sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-dark mb-2">
+        <span class="navbar-brand mb-0 h1">Today's Task</span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <% if user_signed_in? %>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "Today's Task", user_main_tasks_path(current_user.id, today: 1), class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "タスク一覧", user_main_tasks_path(current_user.id), class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "カレンダー", calendar_path(current_user.id), class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "会員情報", users_my_page_path, class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "他ユーザー", relationships_path(current_user.id), class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"nav-link" %>
+              </li>
+            <% elsif admin_signed_in? %>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "Adminログアウト", destroy_admin_session_path, method: :delete, class:"nav-link" %>
+              </li>
+            <% else %>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "ログイン", new_user_session_path, class:"nav-link" %>
+              </li>
+              <li class="nav-item m-2 border border-dark rounded-lg">
+                <%= link_to "新規登録", new_user_registration_path, class:"nav-link" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+    </header>
+      <div class="container">
+      <% flash.each do |key, message| %>
+        <div class="alert alert-<%= bootstrap_alert(key) %>">
+          <%= message %>
+        </div>
+      </div>
+      <% end %>
+      <%= yield %>
   </body>
 </html>

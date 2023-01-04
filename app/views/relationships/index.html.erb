@@ -1,0 +1,133 @@
+<div class="container">
+  <% if @relationship.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <%= @relationship.errors.count %>件のエラーが発生しました
+      <ul>
+        <% @relationship.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <h2>ユーザー連携</h2>
+  <div class="border p-2 my-2 rounded">
+    <h3>新規リクエスト</h3>
+    <%= form_with model: @relationship, url: relationships_request_path, method: :post do |f| %>
+      <%= f.label :email, "メールアドレス", class: "font-weight-bold" %>
+      <%= f.text_field :email, :size=>"40" %>
+      <%= f.submit "申請" %>
+    <% end %>
+  </div>
+  <div class="border p-2 my-2 rounded">
+    <h3>フォロー一覧</h3>
+      <% if @active_relationships.present? %>
+        <table class="table table-bordered table-sm align-middle">
+          <thead class="table-dark text-center align-middle">
+            <tr>
+              <th>ユーザー名</th>
+              <th>メールアドレス</th>
+              <th>Today's Task</th>
+              <th>Task一覧</th>
+              <th>カレンダー</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @active_relationships.each do |request_relationship| %>
+              <tr>
+                <td><%= request_relationship.followed.name %></td>
+                <td><%= request_relationship.followed.email %></td>
+                <td class="text-center align-middle"><%= link_to "Today's Task", user_main_tasks_path(request_relationship.followed.id, today: 1) %></td>
+                <td class="text-center align-middle"><%= link_to "タスク一覧", user_main_tasks_path(request_relationship.followed.id) %></td>
+                <td class="text-center align-middle"><%= link_to "カレンダー", calendar_path(request_relationship.followed.id) %></td>
+                <td class="text-center align-middle"><%= link_to "削除", relationships_unfollow_path(request_relationship.id), method: :delete %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        フォローをしていません
+      <% end %>
+    </div>
+    <div class="border p-2 my-2 rounded">
+      <h3>フォロワー一覧</h3>
+        <% if @passive_relationships.present? %>
+          <table class="table table-bordered table-sm align-middle">
+            <thead class="table-dark text-center align-middle">
+              <tr>
+                <th>ユーザー名</th>
+                <th>メールアドレス</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @passive_relationships.each do |request_relationship| %>
+                <tr>
+                  <td><%= request_relationship.follower.name %></td>
+                  <td><%= request_relationship.follower.email %></td>
+                  <td class="text-center align-middle"><%= link_to "削除", relationships_unfollow_path(request_relationship.id), method: :delete %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          フォロワーがいません
+        <% end %>
+    </div>
+    <div class="border p-2 my-2 rounded">
+      <h3>リクエスト一覧</h3>
+      <% if @active_request_relationships.present? %>
+        <table class="table table-bordered table-sm align-middle">
+          <thead class="table-dark text-center align-middle">
+            <tr>
+              <th>ユーザー名</th>
+              <th>メールアドレス</th>
+              <th>申請日</th>
+              <th></th>
+            </tr>
+          </thead>
+        <tbody>
+            <% @active_request_relationships.each do |request_relationship| %>
+              <tr>
+                <td><%= request_relationship.followed.name %></td>
+                <td><%= request_relationship.followed.email %></td>
+                <td><%= request_relationship.created_at.strftime('%Y年%m月%d日') %></td>
+                <td class="text-center align-middle"><%= link_to "取り消し", relationships_unfollow_path(request_relationship.id), method: :delete %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        リクエストがありません
+      <% end %>
+    </div>
+    <div class="border p-2 my-2 rounded">
+      <h3>承認待ち一覧</h3>
+      <% if @passive_request_relationships.present? %>
+        <table class="table table-bordered table-sm align-middle">
+          <thead class="table-dark text-center align-middle">
+            <tr>
+              <th>ユーザー名</th>
+              <th>メールアドレス</th>
+              <th>申請日</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+        <tbody>
+          <% @passive_request_relationships.each do |request_relationship| %>
+            <tr>
+              <td><%= request_relationship.follower.name %></td>
+              <td><%= request_relationship.follower.email %></td>
+              <td><%= request_relationship.created_at.strftime('%Y年%m月%d日') %></td>
+              <td class="text-center align-middle"><%= link_to "承認", relationships_accept_path(request_relationship.id), method: :patch %></td>
+              <td class="text-center align-middle"><%= link_to "却下", relationships_unfollow_path(request_relationship.id), method: :delete %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      承認待ちがありません
+    <% end %>
+  </div>
+</div>

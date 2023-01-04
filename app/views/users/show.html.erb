@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row mx-2">
+    <h2>会員情報ページ</h2>
+  </div>
+    <div class="border rounded px-2 my-2">
+      <P class="font-weight-bold d-flex">ユーザーネーム</P>
+      <p><%= @user.name %></p>
+    </div>
+    <div class="border rounded px-2 my-2">
+      <p class="font-weight-bold">メールアドレス</p>
+      <P><%= @user.email %></P>
+    </div>
+    <%= link_to "編集", users_information_edit_path, class: "border border-dark btn-light btn-sm" %>
+    <%= link_to "退会", users_unsubscribe_path, class: "border border-dark btn-light btn-sm" %>
+</div>

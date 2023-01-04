@@ -1,0 +1,23 @@
+<div class="container">
+  <% if @users.present? %>
+    <p>ユーザー総数： <%= @users.count %></p>
+    <table class="table table-bordered table-sm align-middle">
+      <thead class="table-dark text-center align-middle">
+        <tr>
+          <th>ユーザー名</th>
+          <th>メールアドレス</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    ユーザーはいません
+  <% end %>
+</div>

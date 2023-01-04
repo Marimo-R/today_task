@@ -1,0 +1,43 @@
+<div class="container">
+  <% if @category.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+    <%= @category.errors.count %>件のエラーが発生しました
+    <ul>
+      <% @category.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+    </div>
+  <% end %>
+  <div class="row mx-2">
+    <h2>カテゴリー一覧</h2>
+  </div>
+  <div class="mt-2">
+    <%= form_with model: @category, url: categories_path, method: :post do |f| %>
+    <%= f.text_field :category, placeholder: "カテゴリー名" %>
+    <%= f.submit "新規作成" %>
+    <% end %>
+  </div>
+  <% if @categories.present? %>
+    <div class="mt-2">
+      <table class="table table-striped">
+        <tr>
+          <th>カテゴリー名</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.category %></td>
+            <td><%= link_to "編集" , edit_category_path(category.id) %></td>
+            <td><%= link_to "削除", category_path(category.id), method: :delete %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% else %>
+    <div class="mt-4">
+     <p>カテゴリーが登録されていません</p>
+    </div>
+  <% end %>
+</div>
