@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  namespace :admins do
-    get 'toppages/index'
-  end
   devise_for :users,skip: [:passwords], controllers: {
     registrations: "users/registrations",
     sessions: 'users/sessions'
@@ -16,7 +13,6 @@ Rails.application.routes.draw do
   get 'users/unsubscribe' => 'users#unsubscribe'
   patch 'users/withdrawal' => 'users#withdrawal'
   root to: 'homes#top'
-  get 'about' => 'homes#about'
   resources :categories, only: [:index, :create, :edit, :update, :destroy]
   get 'users/:user_id/main_tasks/today_index' => 'main_tasks#today_index', as: 'today_index'
   get 'users/:user_id/main_tasks/calendar' => 'main_tasks#calendar', as: 'calendar'
