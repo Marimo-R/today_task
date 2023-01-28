@@ -93,7 +93,7 @@
           <tr class="table-secondary small">
             <!--一列目-->
             <% if main_task.sub_tasks.present? %>
-              <td class="align-middle">
+              <td class="text-center align-middle">
                 <a data-toggle="collapse" href="#collapse_<%= main_task.id %>">▼</a>
               </td>
               <% else %>
@@ -109,9 +109,9 @@
             <% end %>
             <!--四列目-->
             <% if main_task.due_date.present? %>
-              <td class="align-middle"><%= main_task.due_date.strftime('%Y/%m/%d') %></td>
+              <td class="text-center align-middle"><%= main_task.due_date.strftime('%Y/%m/%d') %></td>
             <% else %>
-              <td>なし</td>
+              <td class="text-center align-middle">なし</td>
             <% end %>
             <!--五列目-->
             <%# if main_task.status == "incomplete" %>
@@ -153,16 +153,16 @@
             <% sub_tasks.each do |sub_task| %>
               <tr id="collapse_<%= sub_task.main_task.id %>" class="collapse show small">
                 <!--一列目-->
-                <td class="align-middle"></td>
+                <td class="text-center align-middle">・</td>
                 <!--二列目-->
                 <td class="align-middle"><%= link_to sub_task.sub_task, sub_task_path(sub_task.id) %></td>
                 <!--三列目-->
                 <td class="align-middle"></td>
                 <!--四列目-->
                 <% if sub_task.due_date.present? %>
-                  <td class="align-middle"><%= sub_task.due_date.strftime('%Y/%m/%d') %></td>
+                  <td class="text-center align-middle"><%= sub_task.due_date.strftime('%Y/%m/%d') %></td>
                 <% else %>
-                  <td class="align-middle">なし</td>
+                  <td class="text-center align-middle">なし</td>
                 <% end %>
                 <!--五列目-->
                 <%# if sub_task.status == "incomplete" %>
