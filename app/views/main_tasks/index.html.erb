@@ -137,7 +137,7 @@
                 <% end %>
               </td>
               <!--七列目-->
-              <td class="text-center align-middle"><%= link_to "削除", user_main_task_path(main_task.user_id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :delete, class: "btn-sm btn-link" %></td>
+              <td class="text-center align-middle"><%= link_to "削除", user_main_task_path(main_task.user_id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :delete, "data-confirm" => "メインタスクを削除しますか？", class: "btn-sm btn-link" %></td>
               <!--八列目-->
               <% if main_task.is_today_task == false %>
                 <td class="text-center align-middle"><%= link_to "Add", add_today_path(main_task.user.id, main_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link" %></td>
@@ -188,12 +188,12 @@
                     <% end %>
                   </td>
                   <!--七列目-->
-                  <td class="text-center align-middle"><%= link_to "削除", sub_task_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :delete , class: "btn-sm btn-link"%></td>
+                  <td class="text-center align-middle"><%= link_to "削除", sub_task_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :delete, "data-confirm" => "サブタスクを削除しますか？", class: "btn-sm btn-link"%></td>
                   <!--八列目-->
                   <% if sub_task.is_today_task == false %>
-                    <td class="text-center align-middle"><%= link_to "Add", sub_add_today_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
+                    <td class="text-center align-middle"><%= link_to "Add", sub_add_today_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link"%></td>
                   <% elsif sub_task.is_today_task == true %>
-                    <td class="text-center align-middle">♥<%= link_to "Delete", sub_remove_today_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch , class: "btn-sm btn-link"%></td>
+                    <td class="text-center align-middle">♥<%= link_to "Delete", sub_remove_today_path(sub_task.id, status: params[:status], category: params[:category], order: params[:order], today: params[:today]), method: :patch, class: "btn-sm btn-link"%></td>
                   <% end %>
                 <% end %>
               </tr>
