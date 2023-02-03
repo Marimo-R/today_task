@@ -115,8 +115,6 @@ class SubTasksController < ApplicationController
     if current_user.following.include?(@user)
       relationship = Relationship.find_by(follower_id: current_user.id, followed_id: @user.id)
       return relationship.status == 0
-    else
-      current_user.following.exclude?(user)
     end
   end
 
