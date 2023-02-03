@@ -1,7 +1,7 @@
 class MainTasksController < ApplicationController
   before_action :is_matching_login_user_or_follower, only: [:index, :calendar]
   before_action :is_matching_login_user_or_follower_for_main_task, only: [:show]
-  before_action :is_match_login_user_for_main_task, except: [:index, :show, :calendar]
+  before_action :is_match_login_user_and_url, except: [:index, :show, :calendar]
 
   def index
     @user = User.find(params[:user_id])
@@ -138,33 +138,34 @@ class MainTasksController < ApplicationController
     params.require(:main_task).permit(:category_id, :main_task, :memo, :due_date, :is_today_task, :user_id, :status)
   end
 
-  def find_user_from_main_task
+  def find_user_from_main_task_show
     main_task = MainTask.find(params[:id])
     @user = main_task.user
-    @main_task_user_id = @user.id
+    @main_task_user_id = main_task.user_id
   end
 
-  def is_match_login_user_for_main_task
-    find_user_from_main_task
+  def is_match_login_user_and_url
+    user_id = params[:user_id].to_i
     login_user = current_user
-    if(@main_task_user_id != login_user.id)
+    if(user_id != login_user.id)
       redirect_to root_path
     end
   end
 
   def not_following_for_main_task?
-    find_user_from_main_task
+    find_user_from_main_task_show
     if current_user.following.include?(@user)
       relationship = Relationship.find_by(follower_id: current_user.id, followed_id: @main_task_user_id)
       return relationship.status == 0
+    else
+      return current_user.following.exclude?(@user)
     end
   end
 
   def is_matching_login_user_or_follower_for_main_task
-    find_user_from_main_task
-    user_id = @user.id
+    find_user_from_main_task_show
     login_user_id = current_user.id
-    if(user_id != login_user_id) && (not_following_for_main_task?)
+    if(@main_task_user_id != login_user_id) && (not_following_for_main_task?)
       redirect_to root_path
     end
   end
