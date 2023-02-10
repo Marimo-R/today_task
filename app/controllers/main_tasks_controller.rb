@@ -12,17 +12,17 @@ class MainTasksController < ApplicationController
     end
     #@checked = params[:status]
     #メインステータスでの絞り込み機能
-    if params[:status].present?
-      @main_tasks = @main_tasks.where(status: params[:status])
+    if params[:status].present? && params[:status] != "all"
+      @main_tasks = @main_tasks.where(status: MainTask.statuses[params[:status]])
     end
     #カテゴリでの絞り込み機能
     if params[:category].present?
       @main_tasks = @main_tasks.where(category: params[:category])
     end
     #メインタスクの並び替え機能
-    if params[:order].to_i == 1
+    if params[:order] == "name"
       @main_tasks = @main_tasks.order(:main_task)
-    elsif params[:order].to_i == 2
+    elsif params[:order] == "due"
       @main_tasks = @main_tasks.order(Arel.sql("due_date IS NULL"), :due_date)
     end
   end
