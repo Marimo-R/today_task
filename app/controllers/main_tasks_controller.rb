@@ -106,34 +106,8 @@ class MainTasksController < ApplicationController
     redirect_to user_main_tasks_path(@main_task.user_id, status: params[:status], category: params[:category], order: params[:order], today: params[:today])
   end
 
-  #def task_status_to_deleted
-    #@main_task = MainTask.find(params[:id])
-    #@main_task.update(status: 2)
-    #redirect_to user_main_tasks_path(@main_task.user_id, status: params[:status], catergory: params[:cagtegory], order: params[:order])
-  #end
-
-  #def today_index
-    #@user = User.find(params[:user_id])
-    #@main_tasks = @user.main_tasks
-    #@main_tasks = @main_tasks.where(is_today_task: true)
-    #@checked = params[:status]
-    #メインステータスでの絞り込み機能
-    #if params[:status].present?
-      #@main_tasks = @main_tasks.where(status: params[:status])
-    #end
-    #カテゴリでの絞り込み機能
-    #if params[:category].present?
-      #@main_tasks = @main_tasks.where(category: params[:category])
-    #end
-    #メインタスクの並び替え機能
-    #if params[:order].to_i == 1
-      #@main_tasks = @main_tasks.order(:main_task)
-    #elsif params[:order].to_i == 2
-      #@main_tasks = @main_tasks.order(Arel.sql("due_date IS NULL"), :due_date)
-    #end
-  #end
-
   private
+ 
   def params_main_task
     params.require(:main_task).permit(:category_id, :main_task, :memo, :due_date, :is_today_task, :user_id, :status)
   end
