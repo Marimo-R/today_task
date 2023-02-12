@@ -79,12 +79,6 @@ class SubTasksController < ApplicationController
     redirect_to user_main_tasks_path(@sub_task.main_task.user_id, status: params[:status], category: params[:category], order: params[:order], today: params[:today])
   end
 
-  #def task_status_to_deleted
-    #@sub_task = SubTask.find(params[:id])
-    #@sub_task.update(status: 2)
-   #redirect_to user_main_tasks_path(@sub_task.main_task.user_id, status: params[:status], category: params[:category], order: params[:order])
-  #end
-
   private
   def params_sub_task
      params.require(:sub_task).permit(:main_task_id, :sub_task, :memo, :due_date, :is_today_task, :status)
