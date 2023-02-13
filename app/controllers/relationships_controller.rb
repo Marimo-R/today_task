@@ -24,6 +24,9 @@ class RelationshipsController < ApplicationController
     if @followed_user.nil?
       flash[:danger] = "ユーザーが見つかりません メールアドレスが間違っていませんか？"
       redirect_to relationships_path(current_user.id)
+    elsif @followed_user == current_user
+      flash[:danger] = "自分はフォローできません"
+      redirect_to relationships_path(current_user.id)
     else
       @relationship.followed_id = @followed_user.id
       @relationship.status = 0
